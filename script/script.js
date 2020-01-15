@@ -30,12 +30,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     }
 
-    const openCart = () => {
+    const openCart = (event) => {
+        event.preventDefault();
         cartModal.style.display = 'flex';
     };
 
     const closeCart = (event) => {
         const target = event.target;
+        event.preventDefault();
         if (target.classList.contains('cart') || target.classList.contains('cart-close')) {
             cartModal.style.display = 'none';
         }
