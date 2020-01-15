@@ -53,6 +53,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnCart.addEventListener('click', openCart);
     cartModal.addEventListener('click', closeCart);
+    document.addEventListener('keydown', (event) => {
+        if (event.keyCode === 27) {
+            cartModal.style.display = 'none';
+        }
+    });
 
 
 
