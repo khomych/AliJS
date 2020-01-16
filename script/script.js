@@ -8,12 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartModal = document.querySelector('.cart');
     const btnCartClose = cartModal.querySelector('.cart-close');
 
-
-
-
-
-
-
     const createCardGoods = (id, title, price, img) => {
         const card = document.createElement('div');
         card.className = 'card-wrapper col-12 col-md-6 col-lg-4 col-xl-3 pb-3';
@@ -31,8 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             </div>
         </div>`;
-
-
         return card;
     }
 
@@ -43,9 +35,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    const getGoods = (handler) => {
+    const randomSort = (item) => {
+
+        return item.sort(() => Math.random() - 0.5);
+    };
+
+    const getGoods = (handler, filter) => {
         fetch('db/db.json')
             .then(response => response.json())
+            .then(filter)
             .then(handler);
     };
 
@@ -61,15 +59,13 @@ document.addEventListener('DOMContentLoaded', () => {
             event.keyCode === 27) {
             cartModal.style.display = 'none';
         }
-
         document.removeEventListener('keydown', closeCart);
     };
-
 
     btnCart.addEventListener('click', openCart);
     cartModal.addEventListener('click', closeCart);
 
-    getGoods(renderCard);
+    getGoods(renderCard, randomSort);
 
 
 
