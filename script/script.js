@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const goodsWrapper = document.querySelector('.goods-wrapper');
     const cartModal = document.querySelector('.cart');
     const btnCartClose = cartModal.querySelector('.cart-close');
+    const category = document.querySelector('.category');
 
     const createCardGoods = (id, title, price, img) => {
         const card = document.createElement('div');
@@ -14,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         card.innerHTML = `
         <div class="card">
             <div class="card-img-wrapper">
-                <img class="card-img-top" src="${img}" alt="">
+                <img class="card-img-top" src="./${img}" alt="">
                 <button class="card-add-wishlist" data-giids-id = "${id}"></button>
             </div>
             <div class="card-body justify-content-between">
@@ -35,13 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    const randomSort = (item) => {
-
-        return item.sort(() => Math.random() - 0.5);
-    };
+    const randomSort = (item) => item.sort(() => Math.random() - 0.5);
 
     const getGoods = (handler, filter) => {
-        fetch('db/db.json')
+        fetch('./db/db.json')
             .then(response => response.json())
             .then(filter)
             .then(handler);
@@ -62,8 +60,21 @@ document.addEventListener('DOMContentLoaded', () => {
         document.removeEventListener('keydown', closeCart);
     };
 
+
+    const choiseCategory = (event) => {
+        event.preventDefault();
+        const target = event.target;
+
+        if (target.classList.contains('category-item')) {
+            const category = target.dataset.category;
+            getGoods(renderCard, goods =>
+                goods.filter(item =>
+                    item.category.includes(category)));
+        }
+    };
     btnCart.addEventListener('click', openCart);
     cartModal.addEventListener('click', closeCart);
+    category.addEventListener('click', choiseCategory);
 
     getGoods(renderCard, randomSort);
 
